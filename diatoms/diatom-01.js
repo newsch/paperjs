@@ -1,5 +1,10 @@
 // varieties of simple radial art
 
+const REPETITIONS = 10;
+
+let diatoms = [];
+
+
 // helpful functions
 function deg2rad(deg) {
 	return deg / 180 * Math.PI;
@@ -17,6 +22,10 @@ function tand(deg) {
 	return Math.tan(deg2rad(deg));
 }
 
+// rng for inclusive ranges of ints (Math.random returns between [0,1))
+function random(lower, upper) {
+	return Math.floor(Math.random() * (upper - lower + 1)) + lower;
+}
 
 // prep page
 initCanvas = function(canvas, drawFunc) {
@@ -28,7 +37,8 @@ initCanvas = function(canvas, drawFunc) {
 }
 
 window.addEventListener('load', () => {
-	initCanvas(document.getElementById('art-1'), main);
+	generateCanvases(REPETITIONS);
+	console.log('View diatom info by hovering over the outputs above, or using the `diatoms` global object, e.g. `diatoms[<number>]`.');
 }, false);
 
 
@@ -42,6 +52,57 @@ function diatom(point, iter=20, radius1=15, radius2=20) {
 	}
 }
 
-function main() {
-	diatom(paper.view.center);
+function getRandomParams() {
+	let minRad = 2;
+	let maxTotalRad = 40;
+	let iter = random(3, 45);
+	let angle = 360 / iter;
+	let r1 = random(minRad, maxTotalRad/(tand(angle/2)+1));
+	let totalRadLimit = maxTotalRad - r1;
+	let touchLimit = Math.ceil(tand(angle / 2) * r1);
+	let r2 = random(touchLimit, totalRadLimit);
+	return {
+		iter: iter,
+		r1: r1,
+		r2: r2
+	}
+}
+
+function downloadSVG(repr) {
+	// create a diatom from a representation
+	function diatomFromRepr(repr) {
+		return (point) => {
+			diatom(point, repr.iter, repr.radius1, repr.radius2);
+		}
+	};
+
+	let c = document.createElement('canvas');
+	c.width = 100;
+	c.height = 100;
+	initCanvas(c, () => {
+		diatomFromRepr(repr)(paper.view.center);
+	});
+}
+
+
+function generateCanvases(num) {
+	for (let i=1; i <= num; i++) {
+		let c = document.createElement('canvas');
+		c.id = i;
+		c.title = `#${i}`;
+		document.body.append(c);
+		
+		let p = getRandomParams();
+		initCanvas(c, () => {
+			diatom(paper.view.center, p.iter, p.r1, p.r2);
+		});
+
+		// log and save diatom parameters
+		let repr = {
+			element: c,
+			params: p
+		};
+		console.info(repr);
+		diatoms[i] = repr;
+	}
 }
