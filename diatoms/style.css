@@ -1,0 +1,21 @@
+html {
+    height: 100vh;
+}
+body {
+    background: #444;
+    /* fill page */
+    min-height: 100%;
+    margin: 0 15%;
+    /* center canvas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    background: #fff;
+    box-shadow: 0 10px 20px;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
