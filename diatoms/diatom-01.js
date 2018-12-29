@@ -1,8 +1,31 @@
-// varieties of simple radial art
+// several varieties of simple radial patterns
 
-const REPETITIONS = 10;
+let REPETITIONS = 13;  // how many diatoms to draw
+let SEED;  // seed for RNG
+let diatoms = [];  // to be filled with diatom parameters
 
-let diatoms = [];
+let p = new window.URL(document.location).searchParams;
+if (p.get('num') !== null) {
+	let num = parseInt(p.get('num'));
+	if (num != NaN) {
+		REPETITIONS = num;
+		console.debug('Repetitions set from query parameters');
+	}
+}
+if (p.get('seed') !== null) {
+	SEED = p.get('seed');
+} else {
+	SEED = Math.random().toString();
+}
+Math.seedrandom(SEED);
+console.info(`random seed: ${SEED}`);
+
+function updatePermishlink(id='permishlink') {
+	document.getElementById(id).href = `?num=${REPETITIONS}&seed=${SEED}`;
+}
+window.addEventListener('load', ()=> {
+	updatePermishlink();
+})
 
 
 // helpful functions
@@ -27,6 +50,7 @@ function random(lower, upper) {
 	return Math.floor(Math.random() * (upper - lower + 1)) + lower;
 }
 
+
 // prep page
 initCanvas = function(canvas, drawFunc) {
 	// Create an empty project and a view for the canvas:
@@ -38,7 +62,7 @@ initCanvas = function(canvas, drawFunc) {
 
 window.addEventListener('load', () => {
 	generateCanvases(REPETITIONS);
-	console.log('View diatom info by hovering over the outputs above, or using the `diatoms` global object, e.g. `diatoms[<number>]`.');
+	console.log('View diatom info with the output above, or using the `diatoms` global object, e.g. `diatoms[<number>]`.');
 }, false);
 
 
@@ -84,13 +108,12 @@ function downloadSVG(repr) {
 	});
 }
 
-
 function generateCanvases(num) {
 	for (let i=1; i <= num; i++) {
 		let c = document.createElement('canvas');
 		c.id = i;
 		c.title = `#${i}`;
-		document.body.append(c);
+		document.getElementById('art-wall').append(c);
 		
 		let p = getRandomParams();
 		initCanvas(c, () => {
@@ -102,7 +125,7 @@ function generateCanvases(num) {
 			element: c,
 			params: p
 		};
-		console.info(repr);
+		console.debug(repr);
 		diatoms[i] = repr;
 	}
 }

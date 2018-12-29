@@ -5,9 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="/js/seedrandom.js"></script>
     <script type="text/javascript" src="/js/paper-full.js"></script>
     <script type="text/javascript" src="diatom-01.js"></script>
     <title>Diatoms</title>
 </head>
-<body></body>
+<body>
+    <article>
+        <h1>Diatoms</h1>
+        <p>While playing with the <code>paper.js</code> <a href="http://paperjs.org/tutorials/project-items/transforming-items/#advanced-example">rotation examples</a> I was struck by the intricacy of repeated circles and wanted to explore it further. They brought to mind the geometric patterns of the <i>centric</i> variety of <a href="https://en.wikipedia.org/wiki/Diatom">diatoms</a>. What resulted is also somewhat reminiscent of the output of a <a href="https://en.wikipedia.org/wiki/Spirograph">spirograph</a>, but admittedly less intricate.</p>
+        <p>Each canvas below is made up of circles repeated with varying radiuses. Every time you open the page a new set of patterns are generated. You can generate a different number of patterns with the <code>num</code> query parameter (like <a href="?num=3">this</a>!), or get a <a href="" id="permishlink">permanent-ish link</a> for this specific iteration.</p>
+        <p class="note">You can also interact with them a little more with a browser's web developer tools (usually opened with <code>F12</code> or <code>CTRL-SHIFT-I</code> on a laptop/desktop).</p>
+    </article>
+    <div id="art-wall"></div>
+</body>
 </html>

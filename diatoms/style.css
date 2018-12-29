@@ -1,21 +1,61 @@
+:root {
+    --fg: #eee;
+    --bg: #444;
+    --blue: rgb(80, 180, 255);
+    --purple: rgb(180, 80, 255);
+}
+
 html {
     height: 100vh;
-    background: #444;
+    background: var(--bg);
 }
+
 body {
-    /* fill page */
-    /* min-height: 100%; */
-    margin: 10%;
+    margin: 0 10%;
+}
+
+article {
+    color: var(--fg);
+    font-family: Segoe UI, Helvetica, Arial, sans-serif;
+    text-align: justify;
+    width: 80ch;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+a {
+    color: var(--blue);
+}
+
+a:visited {
+    color: var(--purple);
+}
+
+p.note {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+p.note code {
+    font-style: initial;
+}
+
+div#art-wall {
     /* center canvases */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     align-content: center;
+    margin-top: 2rem;
 }
 
 canvas {
-    background: #fff;
+    background: var(--fg);
     box-shadow: 0 5px 10px;
     width: 100px;
     height: 100px;
