@@ -23,9 +23,7 @@ console.info(`random seed: ${SEED}`);
 function updatePermishlink(id='permishlink') {
 	document.getElementById(id).href = `?num=${REPETITIONS}&seed=${SEED}`;
 }
-window.addEventListener('load', ()=> {
-	updatePermishlink();
-})
+window.addEventListener('load', () => updatePermishlink());
 
 
 // helpful functions
@@ -57,7 +55,7 @@ initCanvas = function(canvas, drawFunc) {
 	paper.setup(canvas);
 	drawFunc();
 	// Draw the view now:
-	paper.view.draw();
+	// paper.view.draw();
 }
 
 window.addEventListener('load', () => {
@@ -85,26 +83,38 @@ function getRandomParams() {
 	let totalRadLimit = maxTotalRad - r1;
 	let touchLimit = Math.ceil(tand(angle / 2) * r1);
 	let r2 = random(touchLimit, totalRadLimit);
-	return {
-		iter: iter,
-		r1: r1,
-		r2: r2
-	}
+	return {iter, r1, r2};
 }
 
-function downloadSVG(repr) {
-	// create a diatom from a representation
-	function diatomFromRepr(repr) {
-		return (point) => {
-			diatom(point, repr.iter, repr.radius1, repr.radius2);
-		}
-	};
+function diatomFromRepr({iter, r1, r2}) {
+	return (point) => diatom(point, iter, r1, r2);
+};
 
+function getSvgString(num) {
+	if (num in diatoms) {
+		return diatoms[num].project.exportSVG({asString: true})
+	} else {
+		return new Error(`diatom ${num} does not exist`);
+	}
+};
+
+function downloadDiatom(params) {
+	// create a diatom from a representation
 	let c = document.createElement('canvas');
 	c.width = 100;
 	c.height = 100;
 	initCanvas(c, () => {
-		diatomFromRepr(repr)(paper.view.center);
+		diatomFromRepr(params)(paper.view.center);
+
+		const fileName = "diatom.svg"
+		const url = "data:image/svg+xml;utf8," + encodeURIComponent(paper.project.exportSVG({asString:true}));
+		var link = document.createElement("a");
+		link.download = fileName;
+		link.href = url;
+		document.body.appendChild(link);
+		link.click();
+		// link.remove();
+		// console.log(link);
 	});
 }
 
@@ -115,15 +125,14 @@ function generateCanvases(num) {
 		c.title = `#${i}`;
 		document.getElementById('art-wall').append(c);
 		
-		let p = getRandomParams();
-		initCanvas(c, () => {
-			diatom(paper.view.center, p.iter, p.r1, p.r2);
-		});
+		const p = getRandomParams();
+		initCanvas(c, () => diatom(paper.view.center, p.iter, p.r1, p.r2));
 
 		// log and save diatom parameters
 		let repr = {
 			element: c,
-			params: p
+			params: p,
+			project: paper.project
 		};
 		console.debug(repr);
 		diatoms[i] = repr;
