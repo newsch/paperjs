@@ -4,8 +4,8 @@ Some pieces of work with [`paper.js`](http://paperjs.org/).
 
 ## Contents
 
-- [golden-spiral](/golden-spiral)
-- [diatoms](/diatoms)
+- [golden-spiral](golden-spiral)
+- [diatoms](diatoms)
 
 ## Libraries Used
 
