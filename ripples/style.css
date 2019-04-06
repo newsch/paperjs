@@ -54,7 +54,7 @@ canvas#art {
   background: #fff;
   box-shadow: 0 5px 10px;
   /* max-width: 60vw; */
-  --width: 124px;
+  --width: 90vw;
   width: var(--width);
   height: calc(var(--width) / 16 * 9);
 }

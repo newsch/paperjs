@@ -2,7 +2,7 @@
 
 let SEED; // seed for RNG
 
-let STROKE = 1;
+let STROKE = 20;
 let OFFSET = STROKE;
 
 function ripple(point, stroke, offset) {
@@ -84,7 +84,14 @@ console.info(`random seed: ${SEED}`);
 function updatePermishlink(id = "permishlink") {
   document.getElementById(id).href = `?seed=${SEED}`;
 }
-window.addEventListener("load", () => updatePermishlink());
+// window.addEventListener("load", () => updatePermishlink());
+
+function updateDownload(id = "download") {
+  document.getElementById("download").addEventListener("click", () => {
+    downloadProject(paper.project);
+  });
+}
+window.addEventListener("load", () => updateDownload());
 
 // rng for inclusive ranges of ints (Math.random returns between [0,1))
 function random(lower, upper) {
@@ -112,8 +119,8 @@ window.addEventListener(
       // r(c.width, 0);
       // r(c.width, c.height);
 
-      r(0, c.height / 2);
-      r(c.width, c.height / 2);
+      // r(0, c.height / 2);
+      // r(c.width, c.height / 2);
 
       // paper.onMouseDown = onMouseDown;
     }),
