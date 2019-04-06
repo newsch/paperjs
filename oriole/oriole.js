@@ -54,23 +54,40 @@ window.addEventListener(
 
 // drawing
 function oriole() {
+  function getColor(min = 0, max = 360, step = 30) {
+    return new paper.Color({
+      hue: random(min / step, max / step) * step,
+      saturation: 0.8,
+      lightness: 0.35
+    });
+  }
   let c = paper.view.getViewSize();
   const NUM_STRIPES = 60;
   const STRIPE_WIDTH = c.width / NUM_STRIPES;
   let stripe_size = new paper.Size(STRIPE_WIDTH, c.height);
-  // let color1,
-  //   color2,
-  //   color1len = 0,
-  //   color2len = 0;
+  let color1 = getColor(),
+    color2 = getColor(),
+    color1len = 0,
+    color2len = 0;
   for (let i = 0; i < NUM_STRIPES; i++) {
     let p = new paper.Point(STRIPE_WIDTH * i, 0);
     let r = new paper.Path.Rectangle(p, stripe_size);
+    while (color1len == 0 || color1.hue == color2.hue) {
+      color1 = getColor();
+      color1len = random(1, 5);
+    }
+    while (color2len == 0 || color1.hue == color2.hue) {
+      color2 = getColor();
+      color2len = random(1, 5);
+    }
     // r.strokeColor = "black";
-    r.fillColor = new paper.Color({
-      hue: (360 / NUM_STRIPES) * i,
-      saturation: 1,
-      brightness: 1
-    });
+    if (i % 2 == 0) {
+      r.fillColor = color1;
+      color1len--;
+    } else {
+      r.fillColor = color2;
+      color2len--;
+    }
   }
 }
 
