@@ -46,7 +46,7 @@ function draw() {
   let crossings = square.getCrossings(circle);
 
   for (const crossing of crossings) {
-    console.log(crossing);
+    // console.log(crossing);
     new Path.Circle({
       center: crossing.point,
       radius: 4,
@@ -54,6 +54,22 @@ function draw() {
       parent: crossingGroup
     });
   }
+
+  let first = crossings[0];
+  first.selected = true;
+  console.log(first.curve.point1);
+
+  // let res = circle.divide(square);  // divide the circle with the square
+  // console.log(res);
+
+  // res.selected = true;
+  // let first = res.children[0];
+  // let second = res.children[1];
+  // // res.children[1].selected = true;
+  // circle.selected = true;
+  // delete res.children[1];
+// res.children[0].strokeWidth = 5;
+
 
   // debugger;
 }
