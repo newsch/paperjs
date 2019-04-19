@@ -1,0 +1,67 @@
+:root {
+  --fg: #eee;
+  --bg: #444;
+  --blue: rgb(80, 180, 255);
+  --purple: rgb(180, 80, 255);
+}
+
+html {
+  height: 100vh;
+  background: var(--bg);
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  /* center canvas */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+article {
+  color: var(--fg);
+  font-family: Segoe UI, Helvetica, Arial, sans-serif;
+  text-align: justify;
+  width: 80ch;
+  max-width: 80%;
+  margin: 1rem;
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  color: var(--blue);
+}
+
+a:visited {
+  color: var(--purple);
+}
+
+p.note {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+p.note code {
+  font-style: initial;
+}
+
+canvas#art {
+  background: #fff;
+  box-shadow: 0 5px 10px;
+  /* max-width: 60vw; */
+  --width: 90vw;
+  width: var(--width);
+  height: calc(var(--width) / 16 * 9);
+}
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 1rem;
+}
